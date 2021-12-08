@@ -17,8 +17,6 @@ for nb_bits in range(8,9):
         tab_all_concat = []
 
         # Prepare the csv file for each test
-        fichier = open("processed_data/results_"+str(nb_years+1)+"_years_"+str(nb_bits)+"bits.csv", "w",newline='')
-        writer = csv.writer(fichier)
         for j in range(1, 26 - nb_years) :
             tab_concat = []
             for i in range(0, len_data) :
@@ -39,7 +37,6 @@ for nb_bits in range(8,9):
             #print('y = '+ str(nb_years) + ' et unique = '+ str(nb_of_identified_users))
             
             #ecriture sur le fichier csv
-            writer.writerow([str(j+1994)+' - '+str(j+1994+nb_years), nb_of_identified_users/162541*100])
         
         year_average = (average/(162541*(25-nb_years)))*100
         years_averages.append(year_average)

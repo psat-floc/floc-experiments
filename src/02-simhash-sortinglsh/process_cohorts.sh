@@ -30,6 +30,11 @@ do
       >> tmp
     mv tmp "processed_data/all_cohorts_$bits.csv"
   done
+
+  echo "Adding fingerprinting"
+  for file in "processed_data/all_cohorts_$bits_"* ; do
+    python src/02-simhash-sortinglsh/fingerprint.py $file 
+  done
   
   rm "processed_data/result_$bits_"*.csv
 done

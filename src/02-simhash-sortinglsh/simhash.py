@@ -13,6 +13,9 @@ import sys
 # Thriller, War, Western, No genres listed
 # => 19 dimensions
 
+
+
+
 # random vector creation
 # https://stackoverflow.com/a/8453514
 def make_rand_vector(dims):
@@ -25,6 +28,7 @@ filename = sys.argv[1]
 nb_users = int(sys.argv[2])
 nb_bits = int(sys.argv[3])
 
+
 print(filename)
 ratings = pd.read_csv(filename, header = 0)
 
@@ -34,6 +38,8 @@ arr_vecs = np.zeros((size,22))
 
 # user array (meaned)
 arr_users = np.zeros((nb_users+1,23))
+
+
 
 # ajout du genre de chaque film au dataframe movies
 for index, row in ratings.iterrows():
@@ -148,8 +154,41 @@ yearCohorts = []
 yearCohorts.append(['id',year])
 for i in range(nb_users):
     #print(hex(int(h[i], 2)))
-    yearCohorts.append([i+1,hex(int(h[i], 2))])
+    yearCohorts.append([i+1,int(h[i], 2)])
 
-writer = csv.writer(open('processed_data/result_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
+writer = csv.writer(open('processed_data/simhash_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
+writer.writerows(yearCohorts)
 
+
+# SortingLSH
+print("Applying SortingLSH...")
+
+def anonymityCheck(cohorts, k):
+    """ Check if each cohort appears at least k times """
+    hashes = dict()
+    for i in range(len(cohorts)):
+        if cohorts[i] in hashes.keys():
+            hashes[cohorts[i]] += 1
+        else:
+            hashes[cohorts[i]] = 1
+    minimum = len(cohorts) + 1
+    for i in hashes:
+        if minimum >= hashes[i]:
+            minimum = hashes[i]
+    return minimum >= k
+
+while not anonymityCheck(h, 100):
+    for i in range(len(h)):
+        h[i] = h[i][0:-1]
+
+print("Cohorts are now encoded on", len(h[0]), "bits")
+
+
+yearCohorts = []
+yearCohorts.append(['id',year])
+for i in range(nb_users):
+    #print(hex(int(h[i], 2)))
+    yearCohorts.append([i+1,int(h[i], 2)])
+
+writer = csv.writer(open('processed_data/sortinglsh_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
 writer.writerows(yearCohorts)
