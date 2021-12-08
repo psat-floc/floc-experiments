@@ -30,6 +30,8 @@ do
       >> tmp
     mv tmp "processed_data/all_cohorts_$bits.csv"
   done
+  
+  rm "processed_data/result_$bits_"*.csv
 done
 
 rm a.out
