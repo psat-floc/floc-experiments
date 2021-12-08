@@ -150,6 +150,6 @@ for i in range(nb_users):
     #print(hex(int(h[i], 2)))
     yearCohorts.append([i+1,hex(int(h[i], 2))])
 
-writer = csv.writer(open('result_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
+writer = csv.writer(open('processed_data/result_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
 
 writer.writerows(yearCohorts)

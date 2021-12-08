@@ -1,5 +1,6 @@
 # Project specific files
 processed_data/*
+a.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

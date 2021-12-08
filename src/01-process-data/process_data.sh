@@ -21,7 +21,7 @@ rm processed_data/sort*.csv
 
 echo "Adding the year and cleaning everything"
 
-awk -f src/bash/01-process-data/process_ratings.awk \
+awk -f src/01-process-data/process_ratings.awk \
   processed_data/ratings_tmp.csv | \
   sed '1h;1d;$!H;$!d;G' | \
   sed '1 s/1970/year/g' \
