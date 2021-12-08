@@ -47,7 +47,7 @@ for nb_bits in range(8,9):
         print(counter['0x00x00x00x00x00x00x00x00x00x0'])
 
     # Prepare the global average csv file 
-    fichier2 = open("results_averages_"+str(nb_bits)+"bits.csv", "w",newline='')
+    fichier2 = open("processed_data/results_averages_"+str(nb_bits)+"bits.csv", "w",newline='')
     writer2 = csv.writer(fichier2)
     for y in range(0, 25):
         writer2.writerow([y+1, years_averages[y]])
