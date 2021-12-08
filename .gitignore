@@ -2,6 +2,9 @@
 processed_data/*
 a.out
 
+unprocessed_data/movies.csv
+unprocessed_data/ratings.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
