@@ -1,0 +1,6 @@
+This directory works with both `movies.csv` and `ratings.csv`. With these two
+files, the scripts will be able to generate the rest:
+
+- `ratings_processed.csv`
+- all of the year files
+- the cohorts files
