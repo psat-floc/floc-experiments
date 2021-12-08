@@ -6,9 +6,23 @@ from collections import Counter
 #1 = 1995
 #25 = 2019
 
+
+
 for nb_bits in range(8,9):
     data = pd.read_csv('processed_data/all_cohorts_'+str(nb_bits)+'.csv', header=0).to_numpy()
     len_data = len(data)
+
+    for user in range(len_data):
+        for year in range(1, 25):
+            if(data[user][year] != "0x0" and data[user][year+1] == "0x0"):
+                data[user][year+1] = data[user][year]
+
+    fichier = open("whatv.csv", "w",newline='')
+    writer = csv.writer(fichier)
+    writer.writerows(data)
+
+
+    print("ayo bitch")
 
     years_averages = []
     for y in range(0, 25):
@@ -41,7 +55,7 @@ for nb_bits in range(8,9):
         year_average = (average/(162541*(25-nb_years)))*100
         years_averages.append(year_average)
         print("moyenne d'utilisateur unique sur une periode de", nb_years+1, "ans :", year_average )
-        print(counter['0x00x00x00x00x00x00x00x00x00x0'])
+        print(counter)
 
     # Prepare the global average csv file 
     fichier2 = open("processed_data/results_averages_"+str(nb_bits)+"bits.csv", "w",newline='')
