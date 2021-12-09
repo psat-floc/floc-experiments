@@ -177,7 +177,7 @@ def anonymityCheck(cohorts, k):
             minimum = hashes[i]
     return minimum >= k
 
-while not anonymityCheck(h, 100):
+while (not anonymityCheck(h, 2)) and (len(h) > 1):
     for i in range(len(h)):
         h[i] = h[i][0:-1]
 
