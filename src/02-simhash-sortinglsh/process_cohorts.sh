@@ -11,8 +11,7 @@ gcc src/02-simhash-sortinglsh/gen_result_base.c
 
 echo "Starting to get the cohorts"
 
-visit 8, 12, 16 and 20 bits
-for bits in $(seq 8 4 20);
+# visit 8, 12, 16 and 20 bits
 for year in processed_data/*.csv ; do
   echo "Currently processing on $bits bits file: $year"
   python src/02-simhash-sortinglsh/simhash.py $year $nb_users $bits 
