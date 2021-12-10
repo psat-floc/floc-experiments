@@ -20,23 +20,44 @@ do
     python src/02-simhash-sortinglsh/simhash.py $year $nb_users $bits 
   done
 
-  dos2unix "processed_data/result_$bits_"*.csv
-  echo "id" > "processed_data/all_cohorts_$bits.csv"
-  ./a.out $nb_users >> "processed_data/all_cohorts_$bits.csv"
+  echo "PROCESSING SIMHASH"
 
-  for file in "processed_data/result_$bits_"* ; do
+  dos2unix "processed_data/simhash_$bits_"*.csv
+  echo "id" > "processed_data/all_simhash_$bits.csv"
+  ./a.out $nb_users >> "processed_data/all_simhash_$bits.csv"
+
+  for file in "processed_data/simhash_$bits_"* ; do
     echo "Joining file: $file"
-    join -t , "processed_data/all_cohorts_$bits.csv" $file \
+    join -t , "processed_data/all_simhash_$bits.csv" $file \
       >> tmp
-    mv tmp "processed_data/all_cohorts_$bits.csv"
+    mv tmp "processed_data/all_simhash_$bits.csv"
   done
 
   echo "Adding fingerprinting"
-  for file in "processed_data/all_cohorts_$bits_"* ; do
+  for file in "processed_data/all_simhash_$bits_"* ; do
+    echo ""
     python src/02-simhash-sortinglsh/fingerprint.py $file 
   done
   
-  rm "processed_data/result_$bits_"*.csv
+  echo "PROCESSING SORTINGLSH"
+
+  dos2unix "processed_data/sortinglsh_$bits_"*.csv
+  echo "id" > "processed_data/all_sortinglsh_$bits.csv"
+  ./a.out $nb_users >> "processed_data/all_sortinglsh_$bits.csv"
+
+  for file in "processed_data/sortinglsh_$bits_"* ; do
+    echo "Joining file: $file"
+    join -t , "processed_data/all_sortinglsh_$bits.csv" $file \
+      >> tmp
+    mv tmp "processed_data/all_sortinglsh_$bits.csv"
+  done
+
+  echo "Adding fingerprinting"
+  for file in "processed_data/all_sortinglsh_$bits_"* ; do
+    echo ""
+    python src/02-simhash-sortinglsh/fingerprint.py $file 
+  done
+  
 done
 
 rm a.out
