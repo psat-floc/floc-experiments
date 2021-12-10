@@ -38,6 +38,8 @@ do
     echo ""
     python src/02-simhash-sortinglsh/fingerprint.py $file 
   done
+
+  rm "processed_data/simhash_$bits"_*
   
   echo "PROCESSING SORTINGLSH"
 
@@ -57,6 +59,8 @@ do
     echo ""
     python src/02-simhash-sortinglsh/fingerprint.py $file 
   done
+  
+  rm "processed_data/sortinglsh_$bits"_*
   
 done
 

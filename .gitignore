@@ -1,6 +1,7 @@
 # Project specific files
 processed_data/*
 a.out
+*.pgf
 
 unprocessed_data/movies.csv
 unprocessed_data/ratings.csv
