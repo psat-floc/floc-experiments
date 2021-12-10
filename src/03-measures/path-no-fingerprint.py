@@ -4,9 +4,8 @@ import csv
 from collections import Counter
 
 #0 = id
-#1 = browser
-#2 = 1995
-#26 = 2019
+#1 = 1995
+#25 = 2019
 
 
 
@@ -14,7 +13,7 @@ data = pd.read_csv(sys.argv[1], header=0).to_numpy()
 len_data = len(data)
 
 for user in range(len_data):
-    for year in range(2, 26): # because 1 is for browsers
+    for year in range(1, 25):
         if(data[user][year] != "0x0" and data[user][year+1] == "0x0"):
             data[user][year+1] = data[user][year]
 
@@ -25,8 +24,8 @@ for user in range(len_data):
 nb_years = 26
 counter = Counter()
 
-for years in range(2, nb_years):
-    year_counter = "1995-"+str(1993+years)
+for years in range(1, nb_years):
+    year_counter = "1995-"+str(1994+years)
     print(year_counter)
     counter[year_counter] = Counter()
 
