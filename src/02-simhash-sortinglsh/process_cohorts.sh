@@ -13,16 +13,17 @@ echo "Starting to get the cohorts"
 
 # visit 8, 12, 16 and 20 bits
 # for bits in $(seq 8 4 20);
-for year in processed_data/*.csv ; do
-  echo "Currently processing on $bits bits file: $year"
-  python src/02-simhash-sortinglsh/simhash.py $year $nb_users $bits 
-done
+# for year in processed_data/*.csv ; do
+#   echo "Currently processing on $bits bits file: $year"
+#   python src/02-simhash-sortinglsh/simhash.py $year $nb_users $bits 
+# done
 
 echo "PROCESSING SIMHASH"
 
 dos2unix "processed_data/simhash_$bits_"*.csv
 echo "id" > "processed_data/all_simhash_$bits.csv"
-./a.out $nb_users >> "processed_data/all_simhash_$bits.csv"
+./a.exe $nb_users >> "processed_data/all_simhash_$bits.csv"
+dos2unix "processed_data/all_simhash_$bits.csv"
 
 for file in "processed_data/simhash_$bits_"* ; do
   echo "Joining file: $file"
@@ -37,13 +38,14 @@ for file in "processed_data/all_simhash_$bits_"* ; do
   python src/02-simhash-sortinglsh/fingerprint.py $file 
 done
 
-rm "processed_data/simhash_$bits"_*
+#rm "processed_data/simhash_$bits"_*
 
 echo "PROCESSING SORTINGLSH"
 
 dos2unix "processed_data/sortinglsh_$bits_"*.csv
 echo "id" > "processed_data/all_sortinglsh_$bits.csv"
-./a.out $nb_users >> "processed_data/all_sortinglsh_$bits.csv"
+./a.exe $nb_users >> "processed_data/all_sortinglsh_$bits.csv"
+dos2unix "processed_data/all_sortinglsh_$bits.csv"
 
 for file in "processed_data/sortinglsh_$bits_"* ; do
   echo "Joining file: $file"
@@ -58,9 +60,9 @@ for file in "processed_data/all_sortinglsh_$bits_"* ; do
   python src/02-simhash-sortinglsh/fingerprint.py $file 
 done
 
-rm "processed_data/sortinglsh_$bits"_*
+#rm "processed_data/sortinglsh_$bits"_*
 
-rm a.out
+rm a.exe
 
 echo ""
 echo "Done processing everything. Check processed_data/ for all_* files"

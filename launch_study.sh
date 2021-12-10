@@ -31,7 +31,7 @@ sleep 2
 printf "${RED}Measuring the uniqueness of each user in the dataset${NC}\n\n"
 sleep 2
 
-./src/03-measures/measures.sh
+./src/03-measures/measures.sh $nb_bits
 
 printf "${RED}Plotting everything to graphs${NC}\n\n"
 sleep 2
