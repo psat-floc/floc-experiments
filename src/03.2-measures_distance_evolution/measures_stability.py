@@ -4,7 +4,7 @@ import csv
 from collections import Counter
 
 filename = sys.argv[1]
-plotname = filename[:-4] + "_plot.csv"
+plotname = filename[:-4] + "_stability.csv"
 
 data = pd.read_csv(filename, header=0).to_numpy()
 len_data = len(data)
