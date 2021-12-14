@@ -37,7 +37,7 @@ for file in "processed_data/all_simhash_$bits_"* ; do
   python src/02-simhash-sortinglsh/fingerprint.py $file 
 done
 
-#rm "processed_data/simhash_$bits"_*
+rm "processed_data/simhash_$bits"_*
 
 echo "PROCESSING SORTINGLSH"
 
@@ -59,7 +59,7 @@ for file in "processed_data/all_sortinglsh_$bits_"* ; do
   python src/02-simhash-sortinglsh/fingerprint.py $file 
 done
 
-#rm "processed_data/sortinglsh_$bits"_*
+rm "processed_data/sortinglsh_$bits"_*
 
 rm a.exe
 
