@@ -121,9 +121,13 @@ for arr_vec in arr_vecs:
 arr_users = arr_users[1:, :]
 
 # average of user interests
+filename = "intermediary_data.csv"
+intermediary_file = open(filename, "w",newline='')
+intermediary_writer = csv.writer(intermediary_file)
 for user in arr_users:
     if user[22] != 0:
         user[3:21] /= user[22]
+    intermediary_writer.writerow(user)
 
 # creation of p-bit vectors (p vectors of size 19)
 # first: white paper proposes 8 bits
