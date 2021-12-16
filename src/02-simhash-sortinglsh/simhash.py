@@ -26,7 +26,6 @@ filename = sys.argv[1]
 nb_users = int(sys.argv[2])
 nb_bits = int(sys.argv[3])
 
-
 print(filename)
 ratings = pd.read_csv(filename, header = 0)
 
@@ -120,9 +119,11 @@ for arr_vec in arr_vecs:
 # enlevage de la premiere colonne (juste les titres)
 arr_users = arr_users[1:, :]
 
+year = filename[-8:-4]
+
 # average of user interests
-filename = "intermediary_data.csv"
-intermediary_file = open(filename, "w",newline='')
+intermediaryName = "processed_data/intermediary_data_" + str(year) + ".csv"
+intermediary_file = open(intermediaryName, "w",newline='')
 intermediary_writer = csv.writer(intermediary_file)
 for user in arr_users:
     if user[22] != 0:
@@ -150,7 +151,6 @@ for i in range(nb_users):
 # for i in range(nb_users):
 #     print(h[i])
 
-year = filename[-8:-4]
 print(year)
 yearCohorts = []
 yearCohorts.append(['id',year])
