@@ -10,7 +10,7 @@ if [ $# -eq 0 ]; then
 fi
 
 printf "${RED}Installing Python dependencies\n\n${NC}"
-pip3 install numpy sklearn pandas matplotlib
+pip3 install -r requirements.txt
 
 nb_bits=$1
 
