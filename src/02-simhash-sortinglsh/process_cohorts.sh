@@ -14,7 +14,7 @@ echo "Starting to get the cohorts"
 # visit 8, 12, 16 and 20 bits
 for year in processed_data/*.csv ; do
   echo "Currently processing on $bits bits file: $year"
-  python src/02-simhash-sortinglsh/simhash.py $year $nb_users $bits 
+  python3 src/02-simhash-sortinglsh/simhash.py $year $nb_users $bits 
 done
 
 echo "PROCESSING SIMHASH"
@@ -34,7 +34,7 @@ done
 echo "Adding fingerprinting"
 for file in "processed_data/all_simhash_$bits_"* ; do
   echo ""
-  python src/02-simhash-sortinglsh/fingerprint.py $file 
+  python3 src/02-simhash-sortinglsh/fingerprint.py $file 
 done
 
 #rm "processed_data/simhash_$bits"_*
@@ -56,7 +56,7 @@ done
 echo "Adding fingerprinting"
 for file in "processed_data/all_sortinglsh_$bits_"* ; do
   echo ""
-  python src/02-simhash-sortinglsh/fingerprint.py $file 
+  python3 src/02-simhash-sortinglsh/fingerprint.py $file 
 done
 
 #rm "processed_data/sortinglsh_$bits"_*
