@@ -1,6 +1,3 @@
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.pipeline import Pipeline
-from floc_simhash import SimHashTransformer
 from random import gauss
 
 import numpy as np
