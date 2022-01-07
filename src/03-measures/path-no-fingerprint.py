@@ -46,8 +46,10 @@ for years in counter:
     for key in counter[years]:
         if(counter[years][key] == 1):
             nb_identified_users += 1
-        
-    avg = (nb_identified_users / len_data) * 100
+
+    avg = 0
+    if(len_data != 0):    
+        avg = (nb_identified_users / len_data) * 100
     plot_writer.writerow([avg])
     print(years + ": " + str(avg))
 

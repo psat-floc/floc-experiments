@@ -25,9 +25,14 @@ for user in range(len_data):
     elif(nb_unique_cohorts == 2) :
         if(('0x0' in data[user]) | ('0x00' in data[user]) | ('0x000' in data[user])) :
             nb_users_with_one_cohort_or_zero += 1
-avg_cohorts_by_user = sum_all_users/len_data
-percentage_only_one_cohort = (nb_users_with_one_cohort/len_data)*100
-percentage_only_one_cohort_or_zeros = (nb_users_with_one_cohort_or_zero/len_data)*100
+            
+avg_cohorts_by_user = 0
+percentage_only_one_cohort = 0
+percentage_only_one_cohort_or_zeros = 0
+if(len_data != 0):
+    avg_cohorts_by_user = sum_all_users/len_data
+    percentage_only_one_cohort = (nb_users_with_one_cohort/len_data)*100
+    percentage_only_one_cohort_or_zeros = (nb_users_with_one_cohort_or_zero/len_data)*100
 print("Il y a en moyenne ", avg_cohorts_by_user, " cohortes différentes par utilisateur")
 print("Il y a ", percentage_only_one_cohort, "% d'utilisateurs avec un seul cohortId")
 print("Il y a ", percentage_only_one_cohort_or_zeros, "% d'utilisateurs avec un seul cohortId en dehors des zéros")

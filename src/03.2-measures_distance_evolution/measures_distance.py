@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import csv
 from collections import Counter
-from scipy import spatial, linalg, mat, dot
+from scipy import spatial
 
 raw_year = sys.argv[1]
 nb_bits = int(sys.argv[2])
@@ -32,7 +32,7 @@ for i in range(nb_users) :
         for j in range(nb_cohorts):
             if(data_cohort_interest[j][0] == cohort_id) :
                 cohort_interest = data_cohort_interest[j][1:size_vector_interest]
-        cos = dot(cohort_interest, data_user_interest[i])/np.linalg.norm(cohort_interest)/np.linalg.norm(data_user_interest[i])
+        cos = np.dot(cohort_interest, data_user_interest[i])/np.linalg.norm(cohort_interest)/np.linalg.norm(data_user_interest[i])
         cos_distance = spatial.distance.cosine(cohort_interest, data_user_interest[i])
         sum_cos_by_cohort[decimal_cohort_id] += cos
         nb_users_by_cohort[decimal_cohort_id] += 1
