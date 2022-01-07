@@ -7,7 +7,7 @@ echo "Getting the amount of users"
 nb_users=`tail -n 1 unprocessed_data/ratings.csv | cut -d , -f 1`
 bits=$1
 
-gcc src/02-simhash-sortinglsh/gen_result_base.c
+gcc src/02-simhash-sortinglsh/gen_result_base.c -o a.exe
 
 echo "Starting to get the cohorts"
 
