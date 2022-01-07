@@ -32,7 +32,10 @@ for year in range(1995, 2020) :
             nb_cohorts += 1
             sum_users += nb_users_by_cohort[i]
     nb_cohorts_writer_sim.writerow([year, nb_cohorts])
-    size_cohorts_writer_sim.writerow([year, sum_users/nb_cohorts])
+    avg = 0
+    if(nb_cohorts != 0):
+        avg = sum_users/nb_cohorts
+    size_cohorts_writer_sim.writerow([year, avg])
 
 #   Sorting lsh
 filename_nb_cohorts_lsh = "processed_data/nb_cohorts_sortinglsh_" + str(nb_bits) + ".csv"
@@ -58,7 +61,10 @@ for year in range(1995, 2020) :
             nb_cohorts += 1
             sum_users += nb_users_by_cohort[i]
     nb_cohorts_writer_lsh.writerow([year, nb_cohorts])
-    size_cohorts_writer_lsh.writerow([year, sum_users/nb_cohorts])
+    avg = 0
+    if(nb_cohorts != 0):
+        avg = sum_users/nb_cohorts
+    size_cohorts_writer_lsh.writerow([year, avg])
 
 
 
