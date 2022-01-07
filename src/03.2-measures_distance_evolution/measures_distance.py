@@ -54,7 +54,10 @@ for i in range(max_nb_cohorts) :
 filename_global = "processed_data/global_cohort_similarity_" + str(nb_bits) + ".csv"
 file_global = open(filename_global, "a",newline='')
 global_writer = csv.writer(file_global)
-global_writer.writerow([year, (sum_all_cohorts/sum_all_users)])
+avg = 0
+if(sum_all_users != 0):
+    avg = sum_all_cohorts/sum_all_users
+global_writer.writerow([year, avg])
 
 
 
