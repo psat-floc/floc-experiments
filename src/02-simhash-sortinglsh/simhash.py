@@ -1,6 +1,3 @@
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.pipeline import Pipeline
-from floc_simhash import SimHashTransformer
 from random import gauss
 
 import numpy as np
@@ -180,7 +177,7 @@ def anonymityCheck(cohorts, k):
             minimum = hashes[i]
     return minimum >= k
 
-while (not anonymityCheck(h, 2)) and (len(h) > 1):
+while (not anonymityCheck(h, 2)) and (len(h[0]) > 1):
     for i in range(len(h)):
         h[i] = h[i][0:-1]
 
@@ -190,10 +187,7 @@ print("Cohorts are now encoded on", len(h[0]), "bits")
 yearCohorts = []
 yearCohorts.append(['id',year])
 for i in range(nb_users):
-    if len(h[i]) == 0:
-        yearCohorts.append([i+1,"0x0"])
-    else:
-        yearCohorts.append([i+1,(hex(int(h[i], 2)))])
+    yearCohorts.append([i+1,(hex(int(h[i], 2)))])
 
 writer = csv.writer(open('processed_data/sortinglsh_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
 writer.writerows(yearCohorts)

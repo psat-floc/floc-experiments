@@ -9,6 +9,9 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
+printf "${RED}Installing Python dependencies\n\n${NC}"
+pip3 install -r requirements.txt
+
 nb_bits=$1
 
 file=processed_data/2019.csv

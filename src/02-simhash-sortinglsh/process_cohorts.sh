@@ -7,7 +7,7 @@ echo "Getting the amount of users"
 nb_users=`tail -n 1 unprocessed_data/ratings.csv | cut -d , -f 1`
 bits=$1
 
-gcc src/02-simhash-sortinglsh/gen_result_base.c
+gcc src/02-simhash-sortinglsh/gen_result_base.c -o a.exe
 
 echo "Starting to get the cohorts"
 
@@ -38,7 +38,7 @@ for file in "processed_data/all_simhash_$bits_"* ; do
   python3 src/02-simhash-sortinglsh/fingerprint.py $file 
 done
 
-#rm "processed_data/simhash_$bits"_*
+rm "processed_data/simhash_$bits"_*
 
 echo "PROCESSING SORTINGLSH"
 
@@ -60,9 +60,9 @@ for file in "processed_data/all_sortinglsh_$bits_"* ; do
   python3 src/02-simhash-sortinglsh/fingerprint.py $file 
 done
 
-#rm "processed_data/sortinglsh_$bits"_*
+rm -f "processed_data/sortinglsh_$bits"_*
 
-rm a.exe
+rm -f a.exe
 
 echo ""
 echo "Done processing everything. Check processed_data/ for all_* files"
