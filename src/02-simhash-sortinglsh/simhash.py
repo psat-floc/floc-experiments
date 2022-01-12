@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import csv
 import sys
+from os.path import exists
 
 # Action, Adventure, Animation, Children's, Comedy, Crime, Documentary,
 # Drama, Fantasy, Film-Noir, Horror, Musical, Mystery, Romance, Sci-Fi,
@@ -20,109 +21,125 @@ def make_rand_vector(dims):
 
 # Parametres d'entrée : filename(years.csv(exp:1999.csv), nb_users, nb_bits)
 filename = sys.argv[1]
-nb_users = int(sys.argv[2])
+nb_users = int(sys.argv[2]) + 1
 nb_bits = int(sys.argv[3])
 
-print(filename)
-ratings = pd.read_csv(filename, header = 0)
+def load_ratings(filename, nb_users):
 
-size = len(ratings)
-# user/movie array
-arr_vecs = np.zeros((size,22))
+    print(filename)
+    ratings = pd.read_csv(filename, header = 0)
 
-# user array (meaned)
-arr_users = np.zeros((nb_users+1,23))
+    size = len(ratings)
+    # user/movie array
+    arr_vecs = np.zeros((size,22))
 
-# ajout du genre de chaque film au dataframe movies
-for index, row in ratings.iterrows():
-    arr_vecs[index][0] = row['userId']
-    arr_vecs[index][1] = row['movieId']
-    arr_vecs[index][2] = row['timestamp']
+    # user array
+    arr_users = np.zeros((nb_users,20))
 
-    genres = row['genres'].split("|")
-    rating = row['rating']
+    # ajout du genre de chaque film au dataframe movies
+    for index, row in ratings.iterrows():
+        arr_vecs[index][0] = row['userId']
+        arr_vecs[index][1] = row['movieId']
+        arr_vecs[index][2] = row['timestamp']
 
-    for genre in genres:
-        if genre == 'Action':
-            arr_vecs[index][3] = rating
-        if genre == 'Adventure':
-            arr_vecs[index][4] = rating
-        if genre == 'Animation':
-            arr_vecs[index][5] = rating
-        if genre == 'Children\'s':
-            arr_vecs[index][6] = rating
-        if genre == 'Comedy':
-            arr_vecs[index][7] = rating
-        if genre == 'Crime':
-            arr_vecs[index][8] = rating
-        if genre == 'Documentary':
-            arr_vecs[index][9] = rating
-        if genre == 'Drama':
-            arr_vecs[index][10] = rating
-        if genre == 'Fantasy':
-            arr_vecs[index][11] = rating
-        if genre == 'Film-Noir':
-            arr_vecs[index][12] = rating
-        if genre == 'Horror':
-            arr_vecs[index][13] = rating
-        if genre == 'Musical':
-            arr_vecs[index][14] = rating
-        if genre == 'Mystery':
-            arr_vecs[index][15] = rating
-        if genre == 'Romance':
-            arr_vecs[index][16] = rating
-        if genre == 'Sci-Fi':
-            arr_vecs[index][17] = rating
-        if genre == 'Thriller':
-            arr_vecs[index][18] = rating
-        if genre == 'War':
-            arr_vecs[index][19] = rating
-        if genre == 'Western':
-            arr_vecs[index][20] = rating
-        if genre == '(no':
-            arr_vecs[index][21] = rating
+        genres = row['genres'].split("|")
+        rating = row['rating']
 
-# for each user: average his vectors
-for arr_vec in arr_vecs:
-    index = int(arr_vec[0])
+        for genre in genres:
+            if genre == 'Action':
+                arr_vecs[index][3] = rating
+            if genre == 'Adventure':
+                arr_vecs[index][4] = rating
+            if genre == 'Animation':
+                arr_vecs[index][5] = rating
+            if genre == 'Children\'s':
+                arr_vecs[index][6] = rating
+            if genre == 'Comedy':
+                arr_vecs[index][7] = rating
+            if genre == 'Crime':
+                arr_vecs[index][8] = rating
+            if genre == 'Documentary':
+                arr_vecs[index][9] = rating
+            if genre == 'Drama':
+                arr_vecs[index][10] = rating
+            if genre == 'Fantasy':
+                arr_vecs[index][11] = rating
+            if genre == 'Film-Noir':
+                arr_vecs[index][12] = rating
+            if genre == 'Horror':
+                arr_vecs[index][13] = rating
+            if genre == 'Musical':
+                arr_vecs[index][14] = rating
+            if genre == 'Mystery':
+                arr_vecs[index][15] = rating
+            if genre == 'Romance':
+                arr_vecs[index][16] = rating
+            if genre == 'Sci-Fi':
+                arr_vecs[index][17] = rating
+            if genre == 'Thriller':
+                arr_vecs[index][18] = rating
+            if genre == 'War':
+                arr_vecs[index][19] = rating
+            if genre == 'Western':
+                arr_vecs[index][20] = rating
+            if genre == '(no':
+                arr_vecs[index][21] = rating
 
-    arr_users[index][3] += arr_vec[3]
-    arr_users[index][4] += arr_vec[4]
-    arr_users[index][5] += arr_vec[5]
-    arr_users[index][6] += arr_vec[6]
-    arr_users[index][7] += arr_vec[7]
-    arr_users[index][8] += arr_vec[8]
-    arr_users[index][9] += arr_vec[9]
-    arr_users[index][10] += arr_vec[10]
-    arr_users[index][11] += arr_vec[11]
-    arr_users[index][12] += arr_vec[12]
-    arr_users[index][13] += arr_vec[13]
-    arr_users[index][14] += arr_vec[14]
-    arr_users[index][15] += arr_vec[15]
-    arr_users[index][16] += arr_vec[16]
-    arr_users[index][17] += arr_vec[17]
-    arr_users[index][18] += arr_vec[18]
-    arr_users[index][19] += arr_vec[19]
-    arr_users[index][20] += arr_vec[20]
-    arr_users[index][21] += arr_vec[21]
+    # for each user: average his vectors
+    for arr_vec in arr_vecs:
+        index = int(arr_vec[0])
 
-    arr_users[index][22] += 1
+        arr_users[index][0] += arr_vec[3]
+        arr_users[index][1] += arr_vec[4]
+        arr_users[index][2] += arr_vec[5]
+        arr_users[index][3] += arr_vec[6]
+        arr_users[index][4] += arr_vec[7]
+        arr_users[index][5] += arr_vec[8]
+        arr_users[index][6] += arr_vec[9]
+        arr_users[index][7] += arr_vec[10]
+        arr_users[index][8] += arr_vec[11]
+        arr_users[index][9] += arr_vec[12]
+        arr_users[index][10] += arr_vec[13]
+        arr_users[index][11] += arr_vec[14]
+        arr_users[index][12] += arr_vec[15]
+        arr_users[index][13] += arr_vec[16]
+        arr_users[index][14] += arr_vec[17]
+        arr_users[index][15] += arr_vec[18]
+        arr_users[index][16] += arr_vec[19]
+        arr_users[index][17] += arr_vec[20]
+        arr_users[index][18] += arr_vec[21]
 
-# enlevage de la premiere colonne (juste les titres)
-arr_users = arr_users[1:, :]
+        arr_users[index][19] += 1
+
+    # enlevage de la premiere colonne (juste les titres)
+    # arr_users = arr_users[1:, :]
+
+    year = filename[-8:-4]
+
+    # average of user interests
+    intermediaryName = "processed_data/intermediary_data_" + str(year) + ".csv"
+    intermediary_file = open(intermediaryName, "w",newline='')
+    intermediary_writer = csv.writer(intermediary_file)
+    
+    for user in arr_users:
+        if user[19] != 0:
+            user[0:18] /= user[19]
+            user[0:18] -= user[0:18].mean()
+
+        intermediary_writer.writerow(user)
+
+    return arr_users
+
 
 year = filename[-8:-4]
+interFile = "processed_data/intermediary_data_" + str(year) + ".csv"
+arr_users = []
 
-# average of user interests
-intermediaryName = "processed_data/intermediary_data_" + str(year) + ".csv"
-intermediary_file = open(intermediaryName, "w",newline='')
-intermediary_writer = csv.writer(intermediary_file)
-for user in arr_users:
-    if user[22] != 0:
-        user[3:21] /= user[22]
-        user[3:21] -= user[3:21].mean()
+if exists(interFile):
+    arr_users = pd.read_csv(interFile, header = None).to_numpy()
+else:
+    arr_users = load_ratings(filename, nb_users)
 
-    intermediary_writer.writerow(user)
 
 # creation of p-bit vectors (p vectors of size 19)
 # first: white paper proposes 8 bits
@@ -132,7 +149,7 @@ for i in range(nb_bits):
     pbit_vec[i] = make_rand_vector(19) 
 
 # x is the d-dimensional simhash takes as input
-x = arr_users[:, 3:22]
+x = arr_users[:, 0:19]
 
 # compute simhash according to google's white paper
 h = ["" for i in range(nb_users)]
@@ -145,7 +162,6 @@ for i in range(nb_users):
 # for i in range(nb_users):
 #     print(h[i])
 
-print(year)
 yearCohorts = []
 yearCohorts.append(['id',year])
 for i in range(nb_users):
@@ -157,7 +173,6 @@ writer = csv.writer(open('processed_data/simhash_'+str(nb_bits)+'_'+year+'.csv',
 writer.writerows(yearCohorts)
 
 # SortingLSH
-print("Applying SortingLSH...")
 
 cohorts = [[i, h[i]] for i in range(nb_users)]
 
