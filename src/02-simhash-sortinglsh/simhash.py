@@ -33,8 +33,6 @@ arr_vecs = np.zeros((size,22))
 # user array (meaned)
 arr_users = np.zeros((nb_users+1,23))
 
-
-
 # ajout du genre de chaque film au dataframe movies
 for index, row in ratings.iterrows():
     arr_vecs[index][0] = row['userId']
@@ -84,10 +82,7 @@ for index, row in ratings.iterrows():
         if genre == '(no':
             arr_vecs[index][21] = rating
 
-    # print(arr_vecs[index])
-
 # for each user: average his vectors
-   
 for arr_vec in arr_vecs:
     index = int(arr_vec[0])
 
@@ -125,6 +120,8 @@ intermediary_writer = csv.writer(intermediary_file)
 for user in arr_users:
     if user[22] != 0:
         user[3:21] /= user[22]
+        user[3:21] -= user[3:21].mean()
+
     intermediary_writer.writerow(user)
 
 # creation of p-bit vectors (p vectors of size 19)
@@ -159,35 +156,50 @@ for i in range(nb_users):
 writer = csv.writer(open('processed_data/simhash_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
 writer.writerows(yearCohorts)
 
-
 # SortingLSH
 print("Applying SortingLSH...")
 
-def anonymityCheck(cohorts, k):
-    """ Check if each cohort appears at least k times """
-    hashes = dict()
-    for i in range(len(cohorts)):
-        if cohorts[i] in hashes.keys():
-            hashes[cohorts[i]] += 1
+cohorts = [[i, h[i]] for i in range(nb_users)]
+
+# sort hashes
+
+sorted_cohorts = sorted(cohorts, key=lambda x: x[1])
+
+# this value sets the minimal amount of users per cohort
+k = 5
+
+cohort_int = 1
+nb_users_in_cohort = 0
+
+for i in range(nb_users):
+    # cas de la fin du tableau, les derniers k - 1 elements doivent appartenir
+    # a la meme cohorte pour ne pas se retrouver avec une cohorte < k
+    if i >= nb_users - k + 1:
+        sorted_cohorts[i].append(cohort_int)
+
+    else:
+        if nb_users_in_cohort < k:
+            sorted_cohorts[i].append(cohort_int)
+            nb_users_in_cohort += 1
+
         else:
-            hashes[cohorts[i]] = 1
-    minimum = len(cohorts) + 1
-    for i in hashes:
-        if minimum >= hashes[i]:
-            minimum = hashes[i]
-    return minimum >= k
-
-while (not anonymityCheck(h, 2)) and (len(h[0]) > 1):
-    for i in range(len(h)):
-        h[i] = h[i][0:-1]
-
-print("Cohorts are now encoded on", len(h[0]), "bits")
-
+            # si l'utilisateur précédent a le mm hash
+            if sorted_cohorts[i][1] == sorted_cohorts[i-1][1]:
+                sorted_cohorts[i].append(cohort_int)
+            # sinon
+            else:
+                cohort_int += 1
+                nb_users_in_cohort = 1
+                sorted_cohorts[i].append(cohort_int)
 
 yearCohorts = []
 yearCohorts.append(['id',year])
+
+sorted_cohorts = sorted(cohorts, key=lambda x: x[0])
+
 for i in range(nb_users):
-    yearCohorts.append([i+1,(hex(int(h[i], 2)))])
+    yearCohorts.append([sorted_cohorts[i][0],hex(sorted_cohorts[i][2])])
 
 writer = csv.writer(open('processed_data/sortinglsh_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
 writer.writerows(yearCohorts)
+
