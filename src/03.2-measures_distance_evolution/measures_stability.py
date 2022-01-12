@@ -39,8 +39,6 @@ print("Il y a ", percentage_only_one_cohort_or_zeros, "% d'utilisateurs avec un 
 
 plot_file = open(plotname, "w",newline='')
 plot_writer = csv.writer(plot_file)
-plot_writer.writerow([0]) # necessary for the graph
 plot_writer.writerow(['average different cohorts for one user', avg_cohorts_by_user])
 plot_writer.writerow(['% users with only one cohortId', percentage_only_one_cohort])
 plot_writer.writerow(['% users with only one cohortId except 0', percentage_only_one_cohort_or_zeros])
-plot_writer.writerow([0]) # necessary for the graph

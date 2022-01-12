@@ -40,7 +40,6 @@ for i in range(nb_users) :
 filename = "processed_data/cohort_similarity_" + str(year) + "_" + str(nb_bits) + ".csv"
 file_similarity = open(filename, "w",newline='')
 file_writer = csv.writer(file_similarity)
-file_writer.writerow([0]) # necessary for the graph
 sum_all_cohorts = 0
 sum_all_users = 0
 for i in range(max_nb_cohorts) :
@@ -58,6 +57,4 @@ avg = 0
 if(sum_all_users != 0):
     avg = sum_all_cohorts/sum_all_users
 global_writer.writerow([year, avg])
-
-
 

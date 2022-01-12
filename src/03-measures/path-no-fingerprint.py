@@ -38,7 +38,6 @@ for years in range(1, nb_years):
 
 plot_file = open(plotname, "w",newline='')
 plot_writer = csv.writer(plot_file)
-plot_writer.writerow([0]) # necessary for the graph
 
 for years in counter:
     nb_identified_users = 0
@@ -53,11 +52,3 @@ for years in counter:
     plot_writer.writerow([avg])
     print(years + ": " + str(avg))
 
-plot_writer.writerow([0]) # necessary for the graph
-
-"""
-0
-0.01
-0.02
-0
-"""
