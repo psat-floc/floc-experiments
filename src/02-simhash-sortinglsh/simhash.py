@@ -198,7 +198,7 @@ yearCohorts.append(['id',year])
 sorted_cohorts = sorted(cohorts, key=lambda x: x[0])
 
 for i in range(nb_users):
-    yearCohorts.append([sorted_cohorts[i][0],hex(sorted_cohorts[i][2])])
+    yearCohorts.append([sorted_cohorts[i][0] + 1,hex(sorted_cohorts[i][2])])
 
 writer = csv.writer(open('processed_data/sortinglsh_'+str(nb_bits)+'_'+year+'.csv', 'w',newline=''))
 writer.writerows(yearCohorts)
