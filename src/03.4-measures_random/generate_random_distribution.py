@@ -1,0 +1,36 @@
+import numpy as np
+import pandas as pd
+import sys
+import csv
+import random
+
+nb_bits = sys.argv[1]
+filename_nb_cohorts = "processed_data/nb_cohorts_simhash_" + str(nb_bits) + ".csv"
+data_nb_cohorts = pd.read_csv(filename_nb_cohorts, header=None).to_numpy()
+
+for year in range(1995, 2020):
+    print(year)
+    filename = "processed_data/intermediary_data_" + str(year) + ".csv"
+    data = pd.read_csv(filename, header=None).to_numpy()
+    len_data = len(data)
+    non_empty_data = []
+    non_empty_data_with_id = []
+    for i in range(len_data) :
+        empty = True
+        for j in range(len(data[i])) :
+            if(data[i][j] != 0 and data[i][j] != 0.0) :
+                empty = False
+        if(not empty) :
+            non_empty_data.append(data[i])
+            non_empty_data_with_id.append(np.insert(data[i], 0, i))
+
+    filename_output = "processed_data_random/cohorts_random_" + str(nb_bits) + "_" + str(year) + ".csv"
+    file_output = open(filename_output, "w", newline='')
+    output_writer = csv.writer(file_output)
+    output_writer.writerow(['user_id', 'cluster'])
+    # On demande le même nombre de clusters que ce que simhash nous avait donné
+    nb_clusters = data_nb_cohorts[year - 1995][1]
+    for i in range(len(non_empty_data_with_id)):
+        cluster = random.randrange(0,nb_clusters)
+        non_empty_data_with_id[i] = np.append(non_empty_data_with_id[i], cluster)
+        output_writer.writerow([int(non_empty_data_with_id[i][0]), int(non_empty_data_with_id[i][-1])])

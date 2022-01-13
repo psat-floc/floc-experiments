@@ -47,6 +47,14 @@ for year in processed_data_knn/cohorts_knn_*.csv; do
   python3 src/03.3-measures_knn/cohort_similarity_knn.py $year $bits
 done
 
+python3 src/03.4-measures_random/generate_random_distribution.py $bits
+
+for year in processed_data_random/cohorts_random_*.csv; do
+  echo "calculating random cohort interests on $bits bits file: $year"
+  python3 src/03.4-measures_random/average_interest_by_cohort_random.py $year $bits
+  echo "calculating random cohort similarity on $bits bits file: $year"
+  python3 src/03.4-measures_random/cohort_similarity_random.py $year $bits
+done
 
 
 

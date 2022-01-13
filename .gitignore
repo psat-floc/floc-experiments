@@ -1,6 +1,7 @@
 # Project specific files
 processed_data/*
 processed_data_knn/*
+processed_data_random/*
 a.out
 a.exe
 *.pgf

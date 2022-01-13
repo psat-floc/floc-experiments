@@ -18,7 +18,7 @@ def add_tabs(tab1, tab2) :
 raw_year = sys.argv[1]
 nb_bits = int(sys.argv[2])
 year = raw_year[-8:-4]
-filename_cohort_id = "processed_data_knn/cohorts_knn_" + str(nb_bits) + "_" + str(year) + ".csv"
+filename_cohort_id = "processed_data_random/cohorts_random_" + str(nb_bits) + "_" + str(year) + ".csv"
 filename_user_interset = "processed_data/intermediary_data_" + str(year) + ".csv"
 
 data_cohort_id = pd.read_csv(filename_cohort_id, header=0).to_numpy()
@@ -32,7 +32,7 @@ for i in range(nb_users):
     cohort_interests[data_cohort_id[i][1]] = add_tabs(cohort_interests[data_cohort_id[i][1]], data_user_interset[data_cohort_id[i][0]])
     nb_users_by_cohort[data_cohort_id[i][1]] += 1
 
-fichier_output = open("processed_data_knn/cohort_interests_" + str(nb_bits) + "_" + str(year) + ".csv", "w",newline='')
+fichier_output = open("processed_data_random/cohort_interests_" + str(nb_bits) + "_" + str(year) + ".csv", "w",newline='')
 writer = csv.writer(fichier_output)
 for i in range(nb_cohorts) :
     if(nb_users_by_cohort[i] != 0) :
