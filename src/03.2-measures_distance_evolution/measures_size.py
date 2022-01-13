@@ -6,7 +6,6 @@ from collections import Counter
 
 nb_bits = int(sys.argv[1])
 max_nb_cohorts = pow(2, nb_bits)
-nb_users_by_cohort = [0 for i in range(max_nb_cohorts)]
 
 #   Simhash
 filename_nb_cohorts_sim = "processed_data/nb_cohorts_simhash_" + str(nb_bits) + ".csv"
@@ -18,6 +17,7 @@ file_size_cohorts_sim = open(filename_size_cohorts_sim, "w",newline='')
 size_cohorts_writer_sim = csv.writer(file_size_cohorts_sim)
 
 for year in range(1995, 2020) :
+    nb_users_by_cohort = [0 for i in range(max_nb_cohorts)]
     filename_cohort_id = "processed_data/simhash_" + str(nb_bits) + "_" + str(year) + ".csv"
     data_cohort_id = pd.read_csv(filename_cohort_id, header=0).to_numpy()
     len_data = len(data_cohort_id)

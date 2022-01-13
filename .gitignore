@@ -1,5 +1,6 @@
 # Project specific files
 processed_data/*
+processed_data_knn/*
 a.out
 a.exe
 *.pgf
