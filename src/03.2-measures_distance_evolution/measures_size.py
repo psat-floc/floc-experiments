@@ -47,6 +47,7 @@ file_size_cohorts_lsh = open(filename_size_cohorts_lsh, "w",newline='')
 size_cohorts_writer_lsh = csv.writer(file_size_cohorts_lsh)
 
 for year in range(1995, 2020) :
+    nb_users_by_cohort = [0 for i in range(max_nb_cohorts)]
     filename_cohort_id = "processed_data/sortinglsh_" + str(nb_bits) + "_" + str(year) + ".csv"
     data_cohort_id = pd.read_csv(filename_cohort_id, header=0).to_numpy()
     len_data = len(data_cohort_id)

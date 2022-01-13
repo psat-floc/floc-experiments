@@ -126,7 +126,7 @@ def load_ratings(filename, nb_users):
             user[0:18] /= user[19]
             user[0:18] -= user[0:18].mean()
 
-        intermediary_writer.writerow(user)
+        intermediary_writer.writerow(user[0:18])
 
     return arr_users
 

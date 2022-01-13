@@ -30,13 +30,24 @@ python3 src/03.2-measures_distance_evolution/measures_size.py $bits
 
 for year in processed_data/1*.csv; do
   echo "calculating cohort similarity on $bits bits file: $year"
-  python3 src/03.2-measures_distance_evolution/measures_distance.py $year $bits
+  python3 src/03.2-measures_distance_evolution/measures_cohort_similarity.py $year $bits
 done
 
 for year in processed_data/2*.csv; do
   echo "calculating cohort similarity on $bits bits file: $year"
-  python3 src/03.2-measures_distance_evolution/measures_distance.py $year $bits
+  python3 src/03.2-measures_distance_evolution/measures_cohort_similarity.py $year $bits
 done
+
+python3 src/03.3-measures_knn/generate_knn_distribution.py $bits
+
+for year in processed_data_knn/cohorts_knn_*.csv; do
+  echo "calculating knn cohort interests on $bits bits file: $year"
+  python3 src/03.3-measures_knn/average_interest_by_cohort_knn.py $year $bits
+  echo "calculating knn cohort similarity on $bits bits file: $year"
+  python3 src/03.3-measures_knn/cohort_similarity_knn.py $year $bits
+done
+
+
 
 
 

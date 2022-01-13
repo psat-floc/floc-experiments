@@ -9,12 +9,12 @@ sns.set()
 from sklearn.cluster import KMeans
 
 nb_bits = sys.argv[1]
-filename_nb_cohorts = "processed_data_knn/nb_cohorts_simhash_" + str(nb_bits) + ".csv"
+filename_nb_cohorts = "processed_data/nb_cohorts_simhash_" + str(nb_bits) + ".csv"
 data_nb_cohorts = pd.read_csv(filename_nb_cohorts, header=None).to_numpy()
 
 for year in range(1995, 2020):
     print(year)
-    filename = "processed_data_knn/intermediary_data_" + str(year) + ".csv"
+    filename = "processed_data/intermediary_data_" + str(year) + ".csv"
     data = pd.read_csv(filename, header=None).to_numpy()
     len_data = len(data)
     non_empty_data = []
@@ -22,7 +22,7 @@ for year in range(1995, 2020):
     for i in range(len_data) :
         empty = True
         for j in range(len(data[i])) :
-            if(data[i][j] != 0) :
+            if(data[i][j] != 0 and data[i][j] != 0.0) :
                 empty = False
         if(not empty) :
             non_empty_data.append(data[i])
