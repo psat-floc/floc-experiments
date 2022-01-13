@@ -6,6 +6,8 @@ rm -rf processed_data/*
 
 dos2unix unprocessed_data/*.csv
 
+sed -i "s/(no genres listed)/None/g" unprocessed_data/movies.csv
+
 
 # merging movies and ratings together
 # https://superuser.com/a/26869

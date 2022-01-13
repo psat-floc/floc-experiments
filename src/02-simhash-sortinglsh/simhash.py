@@ -82,7 +82,7 @@ def load_ratings(filename, nb_users):
                 arr_vecs[index][19] = rating
             if genre == 'Western':
                 arr_vecs[index][20] = rating
-            if genre == '(no':
+            if genre == 'None':
                 arr_vecs[index][21] = rating
 
     # for each user: average his vectors
@@ -121,10 +121,11 @@ def load_ratings(filename, nb_users):
     intermediary_file = open(intermediaryName, "w",newline='')
     intermediary_writer = csv.writer(intermediary_file)
     
+    # user[0:19] is actually from element 0 to 18
     for user in arr_users:
         if user[19] != 0:
-            user[0:18] /= user[19]
-            user[0:18] -= user[0:18].mean()
+            user[0:19] /= user[19]
+            user[0:19] -= user[0:19].mean()
 
         intermediary_writer.writerow(user[0:18])
 
