@@ -49,6 +49,8 @@ echo "id" > "processed_data/all_sortinglsh_$bits.csv"
 dos2unix "processed_data/all_sortinglsh_$bits.csv"
 
 for file in "processed_data/sortinglsh_$bits_"* ; do
+  sed -i 's/0x1,/0x0,/g' $file
+  sed -i 's/0x1$/0x0/g' $file
   echo "Joining file: $file"
   join -t , "processed_data/all_sortinglsh_$bits.csv" $file \
     >> tmp
